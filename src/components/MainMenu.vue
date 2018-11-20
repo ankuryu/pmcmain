@@ -11,14 +11,20 @@
 </template>
 
 <script>
-import Price from '@/components/Price.vue' ;
-import Stock from '@/components/Stock.vue' ;
-import Quote from '@/components/Quote.vue' ;
-import Misc from '@/components/Misc.vue' ;
+import Price from '@/views/Price.vue' ;
+import Stock from '@/views/Stock.vue' ;
+import Quote from '@/views/Quote.vue' ;
+import Misc from '@/views/Misc.vue' ;
 
+routes = [
+  {path: '/Price',component:Price},
+  {path: '/Stock',component:Stock},
+  {path: '/Quot',component:Quote},
+  {path: '/Misc',component:Misc}
+]
 export default {
   name: 'MainMenu',
-  routes: ['Price','Stock','Quote'],
+  routes: ,
   props: {
     msg: String
   }
