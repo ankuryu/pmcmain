@@ -16,7 +16,7 @@ import Stock from '@/views/Stock.vue' ;
 import Quote from '@/views/Quote.vue' ;
 import Misc from '@/views/Misc.vue' ;
 
-routes = [
+var routes = [
   {path: '/Price',component:Price},
   {path: '/Stock',component:Stock},
   {path: '/Quot',component:Quote},
@@ -24,7 +24,7 @@ routes = [
 ]
 export default {
   name: 'MainMenu',
-  routes: ,
+  routes ,
   props: {
     msg: String
   }

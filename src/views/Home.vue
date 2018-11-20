@@ -5,6 +5,7 @@
 </template>
 
 <script>
+/* esversion:6 */
 // @ is an alias to /src
 import MainMenu from '@/components/MainMenu.vue'
 
