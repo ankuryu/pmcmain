@@ -5,9 +5,6 @@
 </template>
 
 <script>
-
-var routes = [
-]
 export default {
   name: 'MainMenu',
   props: {
