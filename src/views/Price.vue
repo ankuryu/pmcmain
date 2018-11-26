@@ -51,30 +51,16 @@ export default {
   name: 'Price',
   props: {
     msg: String
-  }
-}
-var dom1 = window.location.href;
-var lnk1 = document.createElement('a');
-lnk1.setAttribute('href',lnk1);
-hst1 = lnk1.hostname ;
-port1 = lnk1.port ;
-pth1 = lnk1.pathname ;
-prt1 = lnk1.protocol ;
-
-//console.log('pp',hst1,prt1,pth1,prt1) ;
-
-var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + lnk1.port
-console.log(myburl);
-vu = new Vue({
-	el: "#app",
-	data : {
+  },
+  data:()=>{
+    return {
 		lcode:"",
 		icode:"",
 		lcodes:[],
 		icodes:[],
 		prices:[]
-
-	},
+    }
+  },
 	created: function(){
 		this.geta_icode(); 
 		this.geta_lcode();  
@@ -118,11 +104,20 @@ vu = new Vue({
 			  p.prices = [] ;
 			}
 		},
-
-
 	}  // end of the methods
-})  // end of the vue instance
+}
+var dom1 = window.location.href;
+var lnk1 = document.createElement('a');
+lnk1.setAttribute('href',lnk1);
+hst1 = lnk1.hostname ;
+port1 = lnk1.port ;
+pth1 = lnk1.pathname ;
+prt1 = lnk1.protocol ;
 
+//console.log('pp',hst1,prt1,pth1,prt1) ;
+
+var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + lnk1.port
+console.log(myburl);
 
 
 </script>
