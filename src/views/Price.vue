@@ -47,6 +47,22 @@
 </template>
 
 <script>
+var dom1 = window.location.href;
+var lnk1 = document.createElement('a');
+lnk1.setAttribute('href',lnk1);
+var hst1 = lnk1.hostname ;
+var port1 = lnk1.port ;
+var pth1 = lnk1.pathname ;
+var prt1 = lnk1.protocol ;
+
+//console.log('pp',hst1,prt1,pth1,prt1) ;
+
+var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + lnk1.port
+console.log(myburl);
+
+import Vue from 'vue';
+ import VueResource from 'vue-resource';
+ Vue.use(VueResource);
 export default {
   name: 'Price',
   props: {
@@ -67,23 +83,25 @@ export default {
 	},
 	methods: {
 		geta_lcode:function(){
-			p = this ;
+			let p = this ;
 			this.$http.get(myburl + "/pmcpri/alcode.json",{params:""} ).then((response)=>{
 				p.lcodes = response.data ;
 			});
 		},
 		geta_icode:function(){
-			p = this ;
-			this.$http.get(myburl + "/pmcpri/aicode.json",{params:""} ).then((response)=>{
+			debugger;
+			let p = this ;
+			console.log(`This is p ${p}`);
+			p.$http.get(myburl + "/pmcpri/aicode.json",{params:""} ).then((response)=>{
 				p.icodes = response.data ;
 			});
 		},
 		get_lc_pri:function(){
-			p = this ;
+			let p = this ;
 			console.log("empty", p.lcode !="");
 			if(p.lcode == undefined ) p.lcode ='' ;
 			if(p.lcode !='' ) {
-			this.$http.get(myburl +'/pmcpri/lcode.json/'+ p.lcode,{params:""} ).then((response)=>{
+			p.$http.get(myburl +'/pmcpri/lcode.json/'+ p.lcode,{params:""} ).then((response)=>{
 			console.log("lcode",p.lcode);
 				p.prices= response.data ;
 			});
@@ -92,11 +110,11 @@ export default {
 			};
 		},
 		get_ic_pri:function(){
-			p = this ;
+			let p = this ;
 			if(p.icode == undefined) p.icode ='';
 			if(p.icode  !='') {
 			p1= {icode: this.icode};
-			this.$http.get(myburl +'/pmcpri/icode.json/'+this.icode,{params:""} ).then((response)=>{
+			p.$http.get(myburl +'/pmcpri/icode.json/'+this.icode,{params:""} ).then((response)=>{
 			console.log("icode",p.icode);
 				p.prices= response.data ;
 			});
@@ -106,20 +124,6 @@ export default {
 		},
 	}  // end of the methods
 }
-var dom1 = window.location.href;
-var lnk1 = document.createElement('a');
-lnk1.setAttribute('href',lnk1);
-hst1 = lnk1.hostname ;
-port1 = lnk1.port ;
-pth1 = lnk1.pathname ;
-prt1 = lnk1.protocol ;
-
-//console.log('pp',hst1,prt1,pth1,prt1) ;
-
-var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + lnk1.port
-console.log(myburl);
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
