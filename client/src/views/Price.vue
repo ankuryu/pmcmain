@@ -89,7 +89,7 @@ export default {
    });
   },
   geta_icode:function(){
-   debugger;
+   
    let p = this ;
    console.log(`This is p ${p}`);
    p.$http.get(myburl + "/pmcpri/aicode.json",{params:""} ).then((response)=>{
