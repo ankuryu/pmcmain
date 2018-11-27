@@ -54,10 +54,11 @@ var hst1 = lnk1.hostname ;
 var port1 = lnk1.port ;
 var pth1 = lnk1.pathname ;
 var prt1 = lnk1.protocol ;
+port1 = '8000'
 
 //console.log('pp',hst1,prt1,pth1,prt1) ;
 
-var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + lnk1.port
+var myburl = lnk1.protocol +'//' + lnk1.hostname + ':' + port1  
 console.log(myburl);
 
 import Vue from 'vue';
