@@ -2,6 +2,7 @@
 const fs = require('fs');
 const  express =  require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const sqlite3  = require("sqlite3").verbose() ;
 
 
@@ -14,7 +15,8 @@ if(fs.existsSync('../db/stkcsm17.db3')){
 	 process.exit(-1);
  }
 
-
+app.use(cors());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 process.on('unhandledRejection', (reason, p) => {
@@ -151,8 +153,8 @@ app.get('/pmcpri/icode.json/:ic',(req,res)=> {
 	if(req.param.ic == "") {
 		apar = [];
 		res.json([]);
-		res.end()
-	db = {};} else {
+		res.end();
+	} else {
 	apar = [req.params.ic] ;
 	console.log('param',apar)
         ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
