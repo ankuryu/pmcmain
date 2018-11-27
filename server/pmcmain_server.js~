@@ -13,7 +13,6 @@ if(fs.existsSync('../db/stkcsm17.db3')){
 	pth='../db/stkcsm17.db3' ;
          bpth = '../db/';
  }else {
-	 console.log('db3 files not found... Exiting !!! ');
 	 process.exit(-1);
  }
 
