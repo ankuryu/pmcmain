@@ -1,0 +1,21 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "To build a CRUD compliant server using Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "author": "Sunil  Gandhi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "jspdf": "^1.3.5",
+    "sqlite3": "^3.1.10"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

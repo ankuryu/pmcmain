@@ -1,0 +1,257 @@
+/*jshint esversion: 6 */
+const fs = require('fs');
+const  express =  require("express");
+const bodyParser = require("body-parser");
+const sqlite3  = require("sqlite3").verbose() ;
+
+
+const app = express();
+let bpth = '';
+if(fs.existsSync('../db/stkcsm17.db3')){
+	pth='../db/stkcsm17.db3' ;
+         bpth = '../db/';
+ }else {
+	 process.exit(-1);
+ }
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  // application specific logging, throwing an error, or other logic here
+});
+
+app.listen(8000 , function() {
+ console.log( "Listening on port 8000");
+});
+ pr1 = [] ;
+
+// Since Static files will be serverd by  vue files this has been removed
+ /*app.get('/pmcstk', (req,res)=>{
+	res.sendFile(__dirname+'/pmcstk.html');
+	// Note :__dirname is directory thac contains the Javascript source Code.  Try logging it and see what you get !!
+	// Mine  '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
+});
+app.get('/pmcpri', (req,res)=>{
+	res.sendFile(__dirname+'/pmcpri.html');
+	// Note :__dirname is directory thac contains the Javascript source Code.  Try logging it and see what you get !!
+}); */
+
+
+app.get('/pmcstk/mfg.json',(req,res)=> {
+	console.log("sTarted");
+	console.log("checking for db");
+//	console.log(fs.existSync('../crud64/db/stkcsm17.db3'));
+		console.log("finished");
+ let db = new sqlite3.Database(pth,(err)=>{ 
+   if(err){
+	   console.log(err);
+   }
+	console.log("Connected to the in Sqlite database");
+	let  sqlsel= "select distinct mfg from stkcsm17 order by mfg  ; " ;
+	 console.log(sqlsel);
+	 console.log(pr1);
+	  db.all(sqlsel,(err,rows)=> {
+		if(err) {
+			return console.error(err.message);
+		}
+		res.json(rows);
+		  res.end();
+	  });
+
+  });
+	db.close();
+	});
+// now for list of icode for the desired mfg set the route
+app.get('/pmcstk/icode.json/:mfg',(req,res)=> {
+	console.log("sTarted for icode");
+	console.log( req.params.mfg);
+	console.log("Manufac : " + req.params.mfg);
+	console.log("checking for db");
+		console.log("finished");
+//	pr1.push(req.params.mfg) ; // pass on the mfg for which icode desired
+        pr2 =[req.params.mfg] ;
+ let db = new sqlite3.Database(pth,(err)=>{ 
+   if(err){
+	   console.log(err);
+   }
+	console.log("Connected to the in Sqlite database");
+
+	console.log("oh",pr2);
+	// pr1.push(req.params.mfg) ;
+	let  sqlsel= "select distinct icode from stkcsm17 where mfg = ? order by icode; " ;
+	  db.all(sqlsel ,pr2,(err,rows)=> {
+		if(err) {
+			return console.error(err.message);
+		}
+		res.json(rows);
+		  res.end();
+	  });
+
+  });
+	db.close();
+	pr1.pop() ;
+	});
+// for list of asize,qty,loc,dt and page for mfg,icode params given set the route and processing
+app.get('/pmcstk/qty.json/:mfg/:icode',(req,res)=> {
+	console.log("sTarted for icode");
+	console.log("checking for db");
+	pr3=[req.params.mfg,req.params.icode];
+//	console.log(fs.existSync('../crud64/db/stkcsm17.db3'));
+		console.log("finished");
+ let db = new sqlite3.Database(pth,(err)=>{ 
+   if(err){
+	   console.log(err);
+   }
+	console.log("Connected to the in Sqlite database");
+	console.log(pr3);
+	let  sqlsel= "select asize,qty,loc,date,pg from stkcsm17 where mfg = ? and icode = ? order by asize ; " ;
+	  db.all(sqlsel ,pr3,(err,rows)=> {
+		if(err) {
+			return console.error(err.message);
+		}
+		res.json(rows);
+		  res.end();
+	  });
+
+  });
+	db.close();
+	});
+
+/////////////////////////////////////////////////  End of  Stock Json Server Section 
+
+///Start of  Price Json Server Section //////////////////////////////
+//
+
+app.get('/pmcpri/lcode.json/:lc',(req,res)=> { 
+  dpth = bpth + 'ldrpri18.db3' ;
+	console.log('Getting prices with Lc');
+	sqlstr = 'Select lcode,icode,"mm",asize,pri,mrp from ldr2018all where lcode = ? ;' ;
+	apar = [req.params.lc] ;
+	if(req.param.lc == "" ){
+		apar = [];
+		res.json([]);
+		res.end();
+	} else {
+	console.log('param',apar)
+	db = {};
+        ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
+		res.json(rslt)
+		res.end();
+	console.log('back at get');	
+
+	});} //end of else
+})
+app.get('/pmcpri/icode.json/:ic',(req,res)=> {
+  dpth = bpth + 'ldrpri18.db3' ;
+	sqlstr = 'Select lcode,icode,"mm",asize,pri,mrp from ldr2018all where icode = ? ;' ;
+	console.log('Getting prices with Ic');
+
+	if(req.param.ic == "") {
+		apar = [];
+		res.json([]);
+		res.end()
+	db = {};} else {
+	apar = [req.params.ic] ;
+	console.log('param',apar)
+        ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
+		res.json(rslt)
+		res.end();
+//	console.log('RESULT',rslt);
+	console.log('back at get');	
+	});
+	} // end of else
+});
+app.get('/pmcpri/alcode.json',(req,res)=> {
+  dpth = bpth + 'ldrpri18.db3' ;
+	sqlstr = 'select distinct lcode from ldr2018all ; ' ;
+	console.log('Getting All Lc');
+	apar =[];
+	db = {};	
+        ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
+		res.json(rslt)
+		res.end();
+//	console.log('RESULT',rslt);
+	console.log('back at get');	
+	});
+
+});
+app.get('/pmcpri/aicode.json',(req,res)=> {
+  dpth = bpth + 'ldrpri18.db3' ;
+	sqlstr = 'select distinct icode from ldr2018all;  ' ;
+	console.log('Getting All Ic');
+	apar = [] ;
+	db = {};
+         ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
+	console.log('back at get');	
+	//res.json({"icode":"GATCL1"});
+	res.json(rslt)
+		 res.end();
+	});
+
+});
+
+
+
+/////////////////////// start of functions ////////////////////////////
+
+
+//  Function to open a sqlte data and fetch data using the sql string
+   async function ftch_sqldata(db,dbpth,sqlstr,apar) {
+
+	// dbpth is the path to sqlite database ; sqlstr is the requisite SQLstring and apar is the array of parameters to be passed to sql command
+	 try {
+   dbh =  await opn_db(db,dbpth) ;
+		 console.log('Param2',apar);
+	 rv_row = await qry_all(dbh,sqlstr,apar) ;
+		//rv_row = await jango()
+//		console.log('Rv-row', rv_row);
+	
+	 console.log('closing',await clos_db(dbh));
+	} catch(err) {
+		console.log( err )
+	}
+	  return rv_row;
+
+}; // end of functions
+
+	 // function to open the  sqlitepath  , parameters  db object and dbpth as string , returns a promise for async await
+const opn_db =function(db,dbpth) {
+		 return new Promise( function( resolve , reject) {
+		 this.db = new sqlite3.Database(dbpth, (err)=>{
+		    if(err) reject('Open Error'+ err.message)
+			 else resolve( this.db )
+		 })
+		 })
+	 }
+
+
+const clos_db =  function(db) {
+    return new Promise(function(resolve, reject) {
+        this.db.close()
+        resolve(true)
+    }) 
+};
+ // function to query db database using query and parameters, returns a promise for async await
+
+function qry_all(db,query, params) {
+		 return new Promise((resolve, reject)=> {
+			 //resolve({name:"Varnil"});
+			 
+			// if(params == undefined) params=[]
+			 console.log('Param3',params);
+		 	 db.all(query, params, (err, rows)=>{
+				 //console.log(rows);
+					 if(err) reject("Read error: " + err.message)
+					 else resolve(rows);
+			 	})  
+    			}) 
+	};
+
+function jango() {
+	return new Promise((resolve,reject)=> {
+		resolve({name:"Zarnil"});
+	})
+}
+// end of the file
