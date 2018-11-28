@@ -85,17 +85,24 @@ export default {
  methods: {
   geta_lcode:function(){
    let p = this ;
-   this.$http.get(myburl + "/pmcpri/alcode.json",{"params":""} ).then((response)=>{
-    p.lcodes = response.data ;
-   });
+   try {
+         this.$http.get(myburl + "/pmcpri/alcode.json",{"params":""} ).then((response)=>{
+           p.lcodes = response.data ;
+   }); } 
+   catch(err){
+     console.log(err);
+   }
   },
   geta_icode:function(){
-   
+    
+    try {
    let p = this ;
    console.log(`This is p ${p}`);
-   p.$http.get(myburl + "/pmcpri/aicode.json",{params:""} ).then((response)=>{
+   p.$http.get(myburl + "/pmcpri/aicode.json",{"params" :""} ).then((response)=>{
     p.icodes = response.data ;
    });
+    } catch(err){console.log(err)
+    }
   },
   get_lc_pri:function(){
    let p = this ;
