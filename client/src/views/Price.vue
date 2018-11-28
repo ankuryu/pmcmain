@@ -79,8 +79,10 @@ export default {
     }
   },
  created: function(){
+   try {
   this.geta_icode(); 
   this.geta_lcode();  
+   } catch(err){console.log(err)};
  },
  methods: {
   geta_lcode:function(){
