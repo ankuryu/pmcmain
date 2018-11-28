@@ -143,7 +143,7 @@ app.get('/pmcpri/lcode.json/:lc',(req,res)=> {
         ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
 		res.json(rslt)
 		res.end();
-	console.log('back at get');	
+	console.log('back at get lcode.json');	
 
 	});} //end of else
 })
@@ -151,7 +151,7 @@ app.get('/pmcpri/icode.json/:ic',(req,res)=> {
   dpth = bpth + 'ldrpri18.db3' ;
 	sqlstr = 'Select lcode,icode,"mm",asize,pri,mrp from ldr2018all where icode = ? ;' ;
 	console.log('Getting prices with Ic');
-
+	db = {};
 	if(req.param.ic == "") {
 		apar = [];
 		res.json([]);
@@ -163,13 +163,13 @@ app.get('/pmcpri/icode.json/:ic',(req,res)=> {
 		res.json(rslt)
 		res.end();
 //	console.log('RESULT',rslt);
-	console.log('back at get');	
+	console.log('back at get icode.json');	
 	});
 	} // end of else
 });
 app.get('/pmcpri/alcode.json',(req,res)=> {
   dpth = bpth + 'ldrpri18.db3' ;
-	sqlstr = 'select distinct lcode from ldr2018all ; ' ;
+	sqlstr = 'select distinct lcode from ldr2018all order by lcode ; ' ;
 	console.log('Getting All Lc');
 	apar =[];
 	db = {};	
@@ -177,18 +177,19 @@ app.get('/pmcpri/alcode.json',(req,res)=> {
 		res.json(rslt)
 		res.end();
 //	console.log('RESULT',rslt);
-	console.log('back at get');	
+	console.log('back at get alcode.json');	
 	});
 
 });
 app.get('/pmcpri/aicode.json',(req,res)=> {
   dpth = bpth + 'ldrpri18.db3' ;
-	sqlstr = 'select distinct icode from ldr2018all;  ' ;
+	sqlstr = 'select distinct icode from ldr2018all order by icode;  ' ;
 	console.log('Getting All Ic');
 	apar = [] ;
 	db = {};
+	console.log('In Aicode : ',dpth,sqlstr,apar);
          ftch_sqldata(db,dpth,sqlstr,apar).then((rslt)=>{
-	console.log('back at get');	
+	console.log('back at get aicode.json');	
 	//res.json({"icode":"GATCL1"});
 	res.json(rslt)
 		 res.end();
@@ -223,7 +224,9 @@ app.get('/pmcpri/aicode.json',(req,res)=> {
 	 // function to open the  sqlitepath  , parameters  db object and dbpth as string , returns a promise for async await
 const opn_db =function(db,dbpth) {
 		 return new Promise( function( resolve , reject) {
+			 console.log('Opening Database .. ',db,dbpth);
 		 this.db = new sqlite3.Database(dbpth, (err)=>{
+			 
 		    if(err) reject('Open Error'+ err.message)
 			 else resolve( this.db )
 		 })
@@ -244,7 +247,9 @@ function qry_all(db,query, params) {
 			 //resolve({name:"Varnil"});
 			 
 			// if(params == undefined) params=[]
-			 console.log('Param3',params);
+			 console.log('In qry_all Param3',params);
+			 console.log('db ',db,'Query : ',query, ' Params ',params);
+			 debugger;
 		 	 db.all(query, params, (err, rows)=>{
 				 //console.log(rows);
 					 if(err) reject("Read error: " + err.message)

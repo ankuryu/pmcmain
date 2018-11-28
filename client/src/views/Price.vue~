@@ -115,7 +115,7 @@ export default {
    let p = this ;
    if(p.icode == undefined) p.icode ='';
    if(p.icode  !='') {
-   let p1= {icode: this.icode};
+   p1= {icode: this.icode};
    p.$http.get(myburl +'/pmcpri/icode.json/'+this.icode,{params:""} ).then((response)=>{
 	   console.log('Fired ic_pri');
    console.log("icode",p.icode);
