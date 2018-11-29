@@ -98,18 +98,18 @@ export default {
    }); } 
    catch(err){
      console.log(err);
-   }
+   } 
   },
   geta_icode:function(){
     
-    try {
+    /*try {
    let p = this ;
    console.log(`This is p ${p}`);
    p.$http.get(myburl + "/pmcpri/aicode.json",{"params" :""} ).then((response)=>{
     p.icodes = response.data ;
    });
     } catch(err){console.log(err)
-    }
+    }*/
   },
   get_lc_pri:function(){
    let p = this ;
