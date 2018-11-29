@@ -81,8 +81,10 @@ export default {
  mounted : function(){
    try {
   this.geta_lcode(); 
+	   this.geta_lcode();
 //  this.icode = this.icodes[1];
   this.geta_icode();  
+	   this.geta_icode();
 //  this.lcode = this.lcodes[1]
   process.nextTick(console.log("created over .."))
    } catch(err){console.log(err)};

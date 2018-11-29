@@ -78,24 +78,36 @@ export default {
   prices:[]
     }
   },
- created: function(){
-  this.geta_icode(); 
-  this.geta_lcode();  
+ mounted : function(){
+   try {
+  this.geta_lcode(); 
+//  this.icode = this.icodes[1];
+  this.geta_icode();  
+//  this.lcode = this.lcodes[1]
+  process.nextTick(console.log("created over .."))
+   } catch(err){console.log(err)};
  },
  methods: {
   geta_lcode:function(){
    let p = this ;
-   this.$http.get(myburl + "/pmcpri/alcode.json",{"params":""} ).then((response)=>{
-    p.lcodes = response.data ;
-   });
+   try {
+         this.$http.get(myburl + "/pmcpri/alcode.json",{"params":""} ).then((response)=>{
+           p.lcodes = response.data ;
+   }); } 
+   catch(err){
+     console.log(err);
+   }
   },
   geta_icode:function(){
-   
+    
+    try {
    let p = this ;
    console.log(`This is p ${p}`);
-   p.$http.get(myburl + "/pmcpri/aicode.json",{params:""} ).then((response)=>{
+   p.$http.get(myburl + "/pmcpri/aicode.json",{"params" :""} ).then((response)=>{
     p.icodes = response.data ;
    });
+    } catch(err){console.log(err)
+    }
   },
   get_lc_pri:function(){
    let p = this ;
@@ -115,7 +127,7 @@ export default {
    let p = this ;
    if(p.icode == undefined) p.icode ='';
    if(p.icode  !='') {
-   p1= {icode: this.icode};
+   let p1= {icode: this.icode};
    p.$http.get(myburl +'/pmcpri/icode.json/'+this.icode,{params:""} ).then((response)=>{
 	   console.log('Fired ic_pri');
    console.log("icode",p.icode);
