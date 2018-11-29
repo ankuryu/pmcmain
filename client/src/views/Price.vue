@@ -81,11 +81,7 @@ export default {
  mounted : function(){
    try {
   this.geta_lcode(); 
-	   this.geta_lcode();
-//  this.icode = this.icodes[1];
-  this.geta_icode();  
-	   this.geta_icode();
-//  this.lcode = this.lcodes[1]
+  setTimeout(this.geta_icode(),1000);  
   process.nextTick(console.log("created over .."))
    } catch(err){console.log(err)};
  },
@@ -102,14 +98,14 @@ export default {
   },
   geta_icode:function(){
     
-    /*try {
+    try {
    let p = this ;
    console.log(`This is p ${p}`);
    p.$http.get(myburl + "/pmcpri/aicode.json",{"params" :""} ).then((response)=>{
     p.icodes = response.data ;
    });
     } catch(err){console.log(err)
-    }*/
+    }
   },
   get_lc_pri:function(){
    let p = this ;

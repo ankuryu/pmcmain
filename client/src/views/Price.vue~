@@ -81,24 +81,20 @@ export default {
  mounted : function(){
    try {
   this.geta_lcode(); 
-	   this.geta_lcode();
-//  this.icode = this.icodes[1];
-  this.geta_icode();  
-	   this.geta_icode();
-//  this.lcode = this.lcodes[1]
+  setTimeout(this.geta_icode(),1000);  
   process.nextTick(console.log("created over .."))
    } catch(err){console.log(err)};
  },
  methods: {
   geta_lcode:function(){
    let p = this ;
-   /*try {
+   try {
          this.$http.get(myburl + "/pmcpri/alcode.json",{"params":""} ).then((response)=>{
            p.lcodes = response.data ;
    }); } 
    catch(err){
      console.log(err);
-   } */
+   } 
   },
   geta_icode:function(){
     
