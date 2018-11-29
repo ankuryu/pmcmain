@@ -236,8 +236,13 @@ const opn_db =function(db,dbpth) {
 
 const clos_db =  function(db) {
     return new Promise(function(resolve, reject) {
-        this.db.close()
-        resolve(true)
+				this.db.close((err)=>{
+					if(err){
+					  console.log('Closing Error');
+						reject(err)}else{ resolve(true)}
+				})
+		
+       // resolve(true)
     }) 
 };
  // function to query db database using query and parameters, returns a promise for async await

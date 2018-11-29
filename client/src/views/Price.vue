@@ -78,10 +78,10 @@ export default {
   prices:[]
     }
   },
- mounted : function(){
+ created : function(){
    try {
-  this.geta_lcode(); 
-  setTimeout(this.geta_icode(),1000);  
+  this.geta_icode(); 
+  setTimeout(this.geta_lcode(),500);  
   process.nextTick(console.log("created over .."))
    } catch(err){console.log(err)};
  },
